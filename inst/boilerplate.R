@@ -1,12 +1,25 @@
 library(deloRean)
 library(opentimeseries)
+library(xlsx)
 
 ## Example Step 2, Generate History
 
 library(tsdbapi)
-keys <- read_dataset_keys("ch.fso.indpau")
+keys <- read_dataset_keys("ch.kof.trsm")
 length(keys)
-all_vintages <- read_ts_history(keys)
+
+# select only public keys:
+ty <- keys[startsWith(keys, "ch.kof.trsm.fcst.ty")]
+length(ty)
+# select only the keys that are in the publicly available xlsx from the kof
+kty <- read.xlsx("kof_trsm_ty.xlsx", sheetIndex = 1)
+nkty <- names(kty)[-1]
+length(nkty) # 12
+# Check which keys from the tsdbapi list are also present in the public xlsx names
+match_ty <- ty[ty %in% nkty]
+length(match_ty) # 12 -> matches
+
+all_vintages <- read_ts_history(match_ty)
 str(all_vintages) # to see the latest vintage, if the series is up to date
 
 # read_ts_history returns names as key_YYYYMMDD; convert to key.YYYY-MM
@@ -15,7 +28,7 @@ vintage_date_str <- sub(".+_([0-9]{8})$", "\\1", names(all_vintages))
 vintage_dates <- as.Date(vintage_date_str, format = "%Y%m%d")
 names(all_vintages) <- sub("_([0-9]{4})([0-9]{2})[0-9]{2}$", ".\\1-\\2", names(all_vintages))
 # remove the dataset prefix so keys match the relative key structure in the archive
-names(all_vintages) <- sub("^ch\\.fso\\.indpau\\.", "", names(all_vintages))
+names(all_vintages) <- sub("^ch\\.kof\\.trsm\\.fcst\\.ty\\.", "", names(all_vintages))
 class(all_vintages) <- c(class(all_vintages), "tslist")
 
 
@@ -30,7 +43,7 @@ archive_import_history(vintages_dt, repository_path = ".")
 
 # check if info is available via api
 # metadata is usually available in german, i.e. locale = "de"
-indpau_meta <- read_dataset_ts_metadata("ch.fso.indpau", locale = "en")
+indpau_meta <- read_dataset_ts_metadata("ch.fso.indpau", locale = "en") # doesnt work
 
 render_metadata()
 meta <- read_metadata(".")
@@ -39,13 +52,13 @@ validate_metadata(meta) # TRUE
 ## Step 6: Write handle_update & process_data
 
 ## Step 7: Seal Archive
-key <- "...."
+key <- "f39a0eb9f5afa9127ecf0f8c55e87b8efab6a62da7c0b1ba8f79ceac6c2fa85a"
 devtools::load_all()
 library(digest)
 checksum_input <- generate_checksum_input(key = key)
 archive_seal(checksum_input)
 
-## Step 8: Check CRON schedule 
+## Step 8: Check CRON schedule
 # check if the cron schedule in .github/workflows/update_data.yaml
 # is adequate for the dataset
 
