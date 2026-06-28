@@ -60,15 +60,15 @@ comparison:
 library(opentimeseries)
 library(tsbox)
 
-ts <- read_open_ts(series = "leading",
-  remote_archive = "opentsi/ch.kof.globalbaro"
+ts <- read_open_ts(series = "l.all.alpin.lg",
+  remote_archive = "opentsi/ch.kof.trsm.fcst.ty"
 )
-ts202307 <- read_open_ts(series = "leading",
-  remote_archive = "opentsi/ch.kof.globalbaro",
-  date = "2023-07-01"
+ts202007 <- read_open_ts(series = "l.all.alpin.lg",
+  remote_archive = "opentsi/ch.kof.trsm.fcst.ty",
+  date = "2020-07-01"
 )
-ts202307$id <- "leading.202307"
+ts202007$id <- "leading.202007"
 ts$id <- sprintf("leading.202606")
-ts_plot(rbind(ts202307, ts))
+ts_plot(rbind(ts202007, ts))
 ```
 
