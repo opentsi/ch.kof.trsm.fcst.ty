@@ -51,13 +51,13 @@ library(tsbox)
 ts <- read_open_ts(series = "l.all.alpin.lg",
   remote_archive = "opentsi/ch.kof.trsm.fcst.ty"
 )
-ts202007 <- read_open_ts(series = "l.all.alpin.lg",
+ts201907 <- read_open_ts(series = "l.all.alpin.lg",
   remote_archive = "opentsi/ch.kof.trsm.fcst.ty",
-  date = "2020-07-01"
+  date = "2019-07-01"
 )
-ts202007$id <- "leading.202007"
+ts201907$id <- "leading.201907"
 ts$id <- sprintf("leading.202606")
-ts_plot(rbind(ts202007, ts))
+ts_plot(rbind(ts201907, ts))
 #> [time]: 'date'
 ```
 

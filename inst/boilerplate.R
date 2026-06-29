@@ -73,4 +73,4 @@ document()
 ## Step 10: Build Readme
 # 1. write an example tsplot into the last code snippet of the Readme.Rmd
 # 2. push the package & transfer to opentsi if needed (s.t. the example works)
-build_readme() # 3.
+devtools::build_readme() # 3.
