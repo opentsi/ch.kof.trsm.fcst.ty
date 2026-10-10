@@ -21,10 +21,7 @@
   "aggregate": {
     "all": "sum"
   },
-  "dim_order": [
-    "origin",
-    "region"
-  ],
+  "dim_order": ["origin", "region"],
   "hierarchy": {
     "origin": {
       "all": {},
@@ -112,5 +109,5 @@
       }
     }
   },
-  "update_checksum": "08559223cbbaa8c5018bf8dbbd502d71d92d4e09ab68b776ee7af166e58aa036"
+  "update_checksum": "7c985944f8040cf4cec7897b0d1b4217836c1e7a48569c34db0dfba8fde8b4a1"
 }

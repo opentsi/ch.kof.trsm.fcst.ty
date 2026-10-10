@@ -4,15 +4,12 @@
 \alias{process_data}
 \title{Process KOF TRSM FCST TY Data}
 \usage{
-process_data(key = key)
-}
-\arguments{
-\item{key}{API key for the KOF Time Series Database.}
+process_data()
 }
 \value{
 Invisibly returns a character vector of output file paths.
 }
 \description{
-Fetches all time series in the ch.fso.indpau collection from the KOF
+Fetches all time series of the ch.kof.trsm.fcst.ty dataset from the KOF
 Time Series Database and writes each to its key.csv
 }

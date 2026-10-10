@@ -4,7 +4,7 @@
 \alias{handle_update}
 \title{Handle Data Update}
 \usage{
-handle_update(key = key)
+handle_update()
 }
 \description{
 Orchestrates the update process: checks if update is needed,
