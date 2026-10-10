@@ -13,11 +13,32 @@ knitr::opts_chunk$set(
 
 # ch.kof.trsm.fcst.ty
 
+[![dataset](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/opentsi/ch.kof.trsm.fcst.ty/main/data-raw/shield.json)](https://github.com/opentsi/ch.kof.trsm.fcst.ty/actions/workflows/update_data.yaml)
+
 The ch.kof.trsm.fcst.ty package provides versioned time series data
 and their meta information for scientific research.
 In addition, the package contains the
 extract-transform-load (ETL) functionality that
 sources the data from its original provider.
+
+## Key Structure
+
+Every series key has four segments, `measure.origin.region.unit`,
+e.g. `l.deu.ch.lg`:
+
+| Segment | Values |
+|---------|--------|
+| measure | `l` level |
+| origin of guests | `all` all guests, `che` Switzerland (domestic), `for` all foreign guests, `deu` Germany, `fra` France, `ita` Italy, `usa` USA, `chn` China, `rest` other foreign markets |
+| region | `ch` Switzerland (total), `alpin` Alpine region, `city` cities, `rest` rest of Switzerland |
+| unit | `lg` overnight stays (Logiernächte), in thousands |
+
+Values are overnight stays per tourism year (winter season plus summer
+season) and include the KOF forecast for the coming years. KOF releases a
+new forecast in May and in October/November; each release is one vintage.
+The seasonal figures are in
+[ch.kof.trsm.fcst.ws](https://github.com/opentsi/ch.kof.trsm.fcst.ws) and
+[ch.kof.trsm.fcst.ss](https://github.com/opentsi/ch.kof.trsm.fcst.ss).
 
 ## Browse Time Series Data
 

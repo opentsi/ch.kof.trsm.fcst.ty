@@ -52,10 +52,9 @@ validate_metadata(meta) # TRUE
 ## Step 6: Write handle_update & process_data
 
 ## Step 7: Seal Archive
-key <- "f39a0eb9f5afa9127ecf0f8c55e87b8efab6a62da7c0b1ba8f79ceac6c2fa85a"
 devtools::load_all()
 library(digest)
-checksum_input <- generate_checksum_input(key = key)
+checksum_input <- generate_checksum_input()
 archive_seal(checksum_input)
 
 ## Step 8: Check CRON schedule
@@ -64,7 +63,7 @@ archive_seal(checksum_input)
 
 ## Step 9: Final Checks & Automation
 devtools::load_all()
-handle_update(key = key)
+handle_update()
 
 library(devtools)
 check()

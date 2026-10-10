@@ -15,8 +15,8 @@ dataset: "trsm_fcst_ty"   # short identifier (e.g., "sjmi", "gdp")
 # Dataset title (required)
 # At minimum, provide English. Add other languages as needed.
 title:
-  en: "KOF Forecasts of Total Year Tourism in Switzerland"
-  de: "KOF Ganzjahrprognosen für den Schweizer Tourismus"
+  en: "KOF Tourism Forecast for Switzerland: Overnight Stays per Tourism Year"
+  de: "KOF Tourismusprognose für die Schweiz: Logiernächte pro Tourismusjahr"
 
 # Data source name (required)
 source_name:
@@ -25,6 +25,18 @@ source_name:
 
 # URL to original data source (required)
 source_url: "https://kof.ethz.ch/en/forecasts-and-indicators/forecasts/kof-forecasts-of-tourism-in-switzerland.html"
+
+# About the data
+# - Annual overnight stays (Logiernächte), observed history plus KOF forecast
+#   for the coming years.
+# - One observation per tourism year = winter season + summer season. The value
+#   dated YYYY-01-01 is winter (YYYY-1)/YYYY plus summer YYYY and equals the sum
+#   of ch.kof.trsm.fcst.ws and ch.kof.trsm.fcst.ss for that year.
+# - KOF publishes a new forecast twice a year: in May (start of the summer
+#   season) and in October/November (start of the winter season). Each release
+#   is one vintage in this archive.
+# - The forecast is based on a large set of macroeconomic variables and
+#   high-frequency indicators.
 
 # Data frequency (required)
 # D = daily, W = weekly, M = monthly, Q = quarterly, Y = yearly, I = irregular
@@ -43,18 +55,28 @@ aggregate:
   all: "sum"
 
 # Dimension order (left to right in the key, after country.provider.dataset)
-# Note: full keys carry fixed segments l (level) and lg (Logiernächte) as
-# variable and unit identifiers; the varying dimensions are origin and region.
+# Every key has four segments: measure.origin.region.unit
+# Example: l.deu.ch.lg = level of overnight stays by guests from Germany
+#          in Switzerland as a whole
+# measure and unit are constant (l, lg); only origin and region vary.
+# Series exist for all origins in region ch, and for origin all in each region.
 dim_order:
+  - measure
   - origin
   - region
+  - unit
 
 # Hierarchical structure of dimensions
+# all = che + for, and ch = alpin + city + rest.
+# deu, fra, ita, usa, chn and rest are selected foreign markets; they are part
+# of for but do not add up to it, so they are not nested below it.
 hierarchy:
+  measure:
+    l: ~
   origin:
-    all: ~
-    che: ~
-    for: ~
+    all:
+      che: ~
+      for: ~
     deu: ~
     fra: ~
     ita: ~
@@ -62,22 +84,34 @@ hierarchy:
     chn: ~
     rest: ~
   region:
-    ch: ~
-    alpin: ~
-    city: ~
-    rest: ~
+    ch:
+      alpin: ~
+      city: ~
+      rest: ~
+  unit:
+    lg: ~
 
 # Human-readable labels for dimensions and their values
 # dimnames: labels for dimension names
 # <dimension_name>: labels for values within that dimension
 labels:
   dimnames:
+    measure:
+      en: "Measure"
+      de: "Messgrösse"
     origin:
       en: "Origin of visitors"
       de: "Herkunft der Gäste"
     region:
       en: "Region"
       de: "Region"
+    unit:
+      en: "Unit"
+      de: "Einheit"
+  measure:
+    l:
+      en: "Level"
+      de: "Niveau"
   origin:
     all:
       en: "All visitors"
@@ -104,8 +138,8 @@ labels:
       en: "China"
       de: "China"
     rest:
-      en: "Rest of the world"
-      de: "Übrige Welt"
+      en: "Other foreign markets"
+      de: "Übrige ausländische Märkte"
   region:
     ch:
       en: "Switzerland (total)"
@@ -119,6 +153,10 @@ labels:
     rest:
       en: "Rest of Switzerland"
       de: "Übriges Mittelland"
+  unit:
+    lg:
+      en: "Overnight stays"
+      de: "Logiernächte"
 
 
 # update checksum is empty in the beginning
